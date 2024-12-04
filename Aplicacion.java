@@ -217,14 +217,22 @@ public class Aplicacion {
 
                 switch (opcion) {
                     case 1 -> gestor.mostrarProductos();
-                    case 2 -> {
+                   case 2 -> {
                         try {
                             System.out.println("Utilice (,) como separador decimal");
                             System.out.print("Ingrese precio mínimo: ");
                             double min = scanner.nextDouble();
                             System.out.print("Ingrese precio máximo: ");
                             double max = scanner.nextDouble();
-                            gestor.consultarPorRangoDePrecios(min, max);
+                            
+                            // Validar que los precios no sean negativos
+                            if (min < 0 || max < 0) {
+                                System.err.println("Error: Los precios no pueden ser negativos. Intente nuevamente.");
+                            } else if (min > max) {
+                                System.err.println("Error: El precio mínimo no puede ser mayor que el precio máximo.");
+                            } else {
+                                gestor.consultarPorRangoDePrecios(min, max);
+                            }
                         } catch (InputMismatchException e) {
                             System.err.println("Error: Asegúrese de ingresar valores numéricos válidos.");
                             scanner.nextLine();
